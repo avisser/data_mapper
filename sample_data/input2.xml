@@ -1,0 +1,32 @@
+<data>
+<MAScore>
+<homeScore>7</homeScore>
+<awayScore>8</awayScore>
+<stringScore>W, 8-7</stringScore>
+<homeVisitor>V</homeVisitor>
+<homeImageURL>http://grfx.cstv.com/graphics/school-logos/smis-lg.png</homeImageURL>
+<awayImageURL>http://grfx.cstv.com/graphics/school-logos/ecu-lg.png</awayImageURL>
+<location>Houston, Texas</location>
+<date_tba>false</date_tba>
+</MAScore>
+<MAScore>
+<homeScore>6</homeScore>
+<awayScore>5</awayScore>
+<stringScore>L, 6-5</stringScore>
+<homeVisitor>V</homeVisitor>
+<homeImageURL>http://grfx.cstv.com/graphics/school-logos/tul-lg.png</homeImageURL>
+<awayImageURL>http://grfx.cstv.com/graphics/school-logos/ecu-lg.png</awayImageURL>
+<location>Houston, Texas</location>
+<date_tba>false</date_tba>
+</MAScore>
+<MAScore>
+<homeScore>9</homeScore>
+<awayScore>4</awayScore>
+<stringScore>L, 9-4</stringScore>
+<homeVisitor>T</homeVisitor>
+<homeImageURL>http://grfx.cstv.com/graphics/school-logos/-lg.png</homeImageURL>
+<awayImageURL>http://grfx.cstv.com/graphics/school-logos/ecu-lg.png</awayImageURL>
+<location>Houston, Texas</location>
+<date_tba>false</date_tba>
+</MAScore>
+</data>
