@@ -12,7 +12,7 @@ function transform($xml, $xsl) {
 }
 
 $xsl_worksheet = file_get_contents('all_xpaths.xsl');
-$xml_input = file_get_contents('input2.xml');
+$xml_input = file_get_contents('../sample_data/input2.xml');
 
 $all_xpaths =  transform($xml_input, $xsl_worksheet);
 
