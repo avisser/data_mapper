@@ -18,16 +18,18 @@ $sample_xml_files = array('../sample_data/photos_rss.xml', '../sample_data/input
 foreach ($sample_xml_files as $xml_file)
 {
 	$xml_input = file_get_contents($xml_file);
+	$t1 = microtime(true);
 	$all_xpaths =  transform($xml_input, $xsl_worksheet);
+	$t2 = microtime(true);
+	print "Transform completed in: ".($t2-$t1)."\n";
 
 	$record_path = null;
 	foreach (explode("\n", $all_xpaths) as $p1)
 	{
-		if (($pos = strpos($p1, "[")) === false ) {
-
-		} else {
+		if (preg_match("/\[[0-9]+\]/", $p1)) {
 			$path_parts = explode("[",$p1);
 			$record_path = $path_parts[0];
+			break;
 		}
 	}
 
