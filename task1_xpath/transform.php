@@ -12,24 +12,29 @@ function transform($xml, $xsl) {
 }
 
 $xsl_worksheet = file_get_contents('all_xpaths.xsl');
-$xml_input = file_get_contents('../sample_data/input2.xml');
+$sample_xml_files = array('../sample_data/photos_rss.xml', '../sample_data/input2.xml');
 
-$all_xpaths =  transform($xml_input, $xsl_worksheet);
 
-$record_path = null;
-foreach (explode("\n", $all_xpaths) as $p1)
+foreach ($sample_xml_files as $xml_file)
 {
-	if (($pos = strpos($p1, "[")) === false ) {
+	$xml_input = file_get_contents($xml_file);
+	$all_xpaths =  transform($xml_input, $xsl_worksheet);
 
-	} else {
-		$path_parts = explode("[",$p1);
-		$record_path = $path_parts[0];
+	$record_path = null;
+	foreach (explode("\n", $all_xpaths) as $p1)
+	{
+		if (($pos = strpos($p1, "[")) === false ) {
+
+		} else {
+			$path_parts = explode("[",$p1);
+			$record_path = $path_parts[0];
+		}
 	}
-}
 
-if ( isset($record_path) ) {
-	print "Record path: $record_path\n";
-} else {
-	print "Record path NOT FOUND!\n";
+	if ( isset($record_path) ) {
+		print "$xml_file: Record path: $record_path\n";
+	} else {
+		print "$xml_file: Record path NOT FOUND!\n";
+	}
 }
 ?>
