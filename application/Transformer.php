@@ -2,11 +2,31 @@
 
 class Transformer
 {
-    function getRecordNode($filename)
+    private $contents;
+
+    public function setContents($contents)
     {
-        $xml_body = file_get_contents($filename);
-        $xsl_worksheet = file_get_contents(ALL_XSLT);
-        $all_xpaths = $this->transform($xml_body, $xsl_worksheet);
+        $this->contents = $contents;
+    }
+
+    public function setContentsFromFilename($filename)
+    {
+        $this->contents = file_get_contents($filename);
+    }
+
+    public function getXslWorksheet()
+    {
+        return file_get_contents(ALL_XSLT);
+    }
+
+    public function getRecordNode($filename = null)
+    {
+        if ($filename)
+        {
+            $this->setContentsFromFilename($filename);
+        }
+
+        $all_xpaths = $this->transform($this->contents, $this->getXslWorksheet());
 
         $record_path = NULL;
         foreach (explode("\n", $all_xpaths) as $p1)
