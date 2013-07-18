@@ -9,10 +9,10 @@ class Transformer
         $all_xpaths = $this->transform($xml_body, $xsl_worksheet);
 
         $record_path = NULL;
-        foreach (explode("\n", $all_xpaths) as $p1) {
-            if (($pos = strpos($p1, "[")) === false) {
-
-            } else {
+        foreach (explode("\n", $all_xpaths) as $p1)
+        {
+            if (preg_match("/\[[0-9]+\]/", $p1))
+            {
                 $path_parts = explode("[", $p1);
                 $record_path = $path_parts[0];
             }
