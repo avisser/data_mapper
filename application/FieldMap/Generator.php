@@ -13,9 +13,17 @@ class Generator
 
     private $record_fields = array();
 
-    public function __construct(\SimpleXMLElement $SimpleXml)
+    public function __construct($filename)
     {
+        $SimpleXml = new \SimpleXMLElement(file_get_contents($filename));
         $this->XML = $SimpleXml;
+    }
+
+    public function getSchemaForXPath($xpath)
+    {
+        $this->setRecordXpath($xpath);
+        $this->generateMappings();
+        return $this->getRecordFields();
     }
 
     public function setRecordXpath($xpath)
