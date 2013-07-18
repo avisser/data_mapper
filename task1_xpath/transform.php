@@ -12,7 +12,7 @@ function transform($xml, $xsl) {
 }
 
 $xsl_worksheet = file_get_contents('all_xpaths.xsl');
-$sample_xml_files = array('../sample_data/photos_rss.xml', '../sample_data/input2.xml', '../sample_data/buildings1.xml', '../sample_data/buildings2.xml');
+$sample_xml_files = array('../sample_data/photos_rss_big.xml', '../sample_data/input2.xml', '../sample_data/buildings1.xml', '../sample_data/buildings2.xml');
 
 
 foreach ($sample_xml_files as $xml_file)
