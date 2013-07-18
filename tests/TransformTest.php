@@ -17,9 +17,10 @@ class TransformTest extends TestBase
 
         foreach ($samples as $sample => $xpath)
         {
-            $output = $transform->getRecordNode("../sample_data/$sample");
+            $output = $transform->getRecordNode($this->sample($sample));
             $this->assertEquals($xpath, $output);
         }
     }
+
 
 }
