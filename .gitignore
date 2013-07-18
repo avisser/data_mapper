@@ -1,0 +1,12 @@
+.idea/
+current
+.metadata
+.buildpath
+.project
+.settings
+atlassian-ide-plugin.xml
+.bundle/
+.DS_Store
+[T|t]humbs.db
+\._*
+/nbproject/private/
