@@ -1,0 +1,9 @@
+<root>
+    <elemA>one</elemA>
+    <elemA attribute1='first' attribute2='second'>two</elemA>
+    <elemB>three</elemB>
+    <elemA>four</elemA>
+    <elemC>
+        <elemB>five</elemB>
+    </elemC>
+</root>
