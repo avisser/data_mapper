@@ -1,0 +1,30 @@
+<data>
+    <bldg>
+        <name>Bldg 1</name>
+        <geocode>
+            <latitude>37.789413</latitude>
+            <longitude>-122.425827</longitude>
+        </geocode>
+    </bldg>
+    <bldg>
+        <name>Bldg 2</name>
+        <geocode>
+            <latitude>37.789413</latitude>
+            <longitude>-122.425827</longitude>
+        </geocode>
+    </bldg>
+    <bldg>
+        <name>Bldg 3</name>
+        <geocode>
+            <latitude>37.789413</latitude>
+            <longitude>-122.425827</longitude>
+        </geocode>
+    </bldg>
+    <bldg>
+        <name>Bldg 4</name>
+        <geocode>
+            <latitude>37.789413</latitude>
+            <longitude>-122.425827</longitude>
+        </geocode>
+    </bldg>
+</data>
