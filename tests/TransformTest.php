@@ -7,8 +7,19 @@ class TransformTest extends TestBase
     function testFindHighCardinalityNode()
     {
         $transform = new Transformer();
-        $output = $transform->getRecordNode('../sample_data/photos_rss.xml');
-        $this->assertEquals('/rss/channel/item', $output);
+        $samples = array(
+            'buildings1.xml' => '/data/bldg',
+            'buildings2.xml' => '/data/bldg',
+            'buildings3.xml' => '/data/bldg',
+            'buildings4.xml' => '/data/bldg',
+            'input2.xml' => '/data/MAScore',
+            '/photos_rss.xml' => '/rss/channel/item');
+
+        foreach ($samples as $sample => $xpath)
+        {
+            $output = $transform->getRecordNode("../sample_data/$sample");
+            $this->assertEquals($xpath, $output);
+        }
     }
 
 }
