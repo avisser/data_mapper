@@ -12,7 +12,7 @@ class AutoloadTester extends TestBase
 
     function testNS()
     {
-        $foo = new FieldMap\Generator(new SimpleXmlElement("<data/>"));
+        $foo = new model\Mapping();
         $this->assertNotNull($foo); //got here!
     }
 }

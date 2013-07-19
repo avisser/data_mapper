@@ -23,7 +23,7 @@ class PreProcessor
         $this->XmlDocument = simplexml_load_string($this->contents);    //  todo this can be cached
 
         $Records = $this->XmlDocument->xpath($record_xpath);
-        $schema = $this->getRecordSchema(null, $record_xpath);
+        $schema = $this->getRecordSchema($record_xpath, null);
         $out = array();
         foreach ($Records as $Record)
         {
@@ -138,7 +138,7 @@ class PreProcessor
         return $this->XmlDocument;
     }
 
-    public function getRecordSchema($XPATH = null, $record_xpath = null)
+    public function getRecordSchema($record_xpath = null, $XPATH = null)
     {
         if ($XPATH == null)
         {

@@ -43,7 +43,7 @@ XPATH;
 
         $XPATH = explode("\n", $XPATH);
         $prefix = '/data/bldg';
-        $schema = $transform->getRecordSchema($XPATH, $prefix);
+        $schema = $transform->getRecordSchema($prefix, $XPATH);
         $expected = array('name', 'lat', 'lon');
         foreach ($expected as $field)
         {
@@ -58,7 +58,7 @@ XPATH;
 
         $XPATH = explode("\n", $XPATH);
         $prefix = '/rss/channel/item';
-        $schema = $PreProcessor->getRecordSchema($XPATH, $prefix);
+        $schema = $PreProcessor->getRecordSchema($prefix, $XPATH);
         $expected = array('title', 'link', 'description', 'pubDate', 'dc:date.Taken', 'author', 'guid', 'media:content', 'media:title', 'media:credit', 'media:thumbnail');
         foreach ($expected as $field)
         {
@@ -73,7 +73,7 @@ XPATH;
 
         $XPATH = explode("\n", $XPATH);
         $prefix = '/data/bldg';
-        $schema = $PreProcessor->getRecordSchema($XPATH, $prefix);
+        $schema = $PreProcessor->getRecordSchema($prefix, $XPATH);
         $expected = array('name' , 'geocode/latitude', 'geocode/longitude');
         foreach ($expected as $field)
         {
