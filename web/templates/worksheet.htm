@@ -34,7 +34,7 @@
                         <select name="{{ trim(@field['name']) }}" form="mapped">
                             <option value="-">-</option>
                             <repeat group="{{ @record_fields }}" value="{{ @rfield }}">
-                                <option value="{{ trim(@rfield) }}">{{ trim(@rfield) }}</option>
+                                <option value="{{ trim(@rfield) }}">{{ trim(@rfield) }} {{ @ifset(@first_record, @rfield) }}</option>
                             </repeat>
                             <option value="custom">Custom...</option>
                         </select><br/>

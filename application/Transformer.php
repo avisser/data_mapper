@@ -20,7 +20,7 @@ class Transformer
         }
 
         $processor = new PreProcessor();
-        $records = $processor->getRecords($xml_file, $Worksheet->record_xpath);
+        $records = $processor->getRecords($Worksheet->record_xpath, $xml_file);
         foreach ($records as $record)
         {
             $out[] = self::bindRecord($record, $Worksheet->mappings, $record_field_map);

@@ -78,7 +78,7 @@ XPATH;
     function testGetRecords()
     {
         $PreProcessor = new PreProcessor();
-        $results = $PreProcessor->getRecords($this->sample('buildings1.xml'), '/data/bldg');
+        $results = $PreProcessor->getRecords('/data/bldg', $this->sample('buildings1.xml'));
 
         $expected = array(
             array('name' => 'Bldg 1', 'lat' => '37.789413', 'lon' => '-122.425827'),
@@ -125,7 +125,7 @@ XSL;
     function testAttributeRecordParsing()
     {
         $proc = new PreProcessor();
-        $records = $proc->getRecords($this->sample('photos_rss_small.xml'), '/rss/channel/item');
+        $records = $proc->getRecords('/rss/channel/item', $this->sample('photos_rss_small.xml'));
 
         //only 1
         $record = $records[0];

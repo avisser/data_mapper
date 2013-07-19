@@ -8,6 +8,10 @@ $f3->set('DEBUG', 3);
 $f3->set('dump', function($a) {
     echo print_r($a, true);
 });
+$f3->set('ifset', function($a, $b) {
+    if (isset($a[$b]))
+        echo $a[$b];
+});
 
 
 //$f3->route('GET /',
@@ -32,10 +36,12 @@ $f3->route('POST /map',
         $processor->setContentsFromFilename($new_tmp_file);
         $xpath = $processor->getRecordXPath();
         $record_fields = $processor->getRecordSchema($xpath);
+        $records = $processor->getRecords($xpath);
         $module = $_POST['module'];
         $schema = model\Schema::load($module);
         $f3->set("xpath", $xpath);
         $f3->set("record_fields", $record_fields);
+        $f3->set("first_record", $records[0]);
         $f3->set("record_fields_arr", json_encode($record_fields));
         $f3->set("schema", $schema);
         $f3->set("module", $module);
