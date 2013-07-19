@@ -4,7 +4,12 @@ define('APP_PATH', realpath(dirname(__FILE__)));
 function my_autoloader($class)
 {
     $filename = APP_PATH . '/' .  str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-    include($filename);
+    if (file_exists($filename))
+    {
+        include($filename);
+    }
+
+    return false;
 }
 
 spl_autoload_register('my_autoloader');
