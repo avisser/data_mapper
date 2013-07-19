@@ -36,8 +36,10 @@ class PreProcessor
                     if ( count($simpleXMLElements) > 0)
                     {
                         $fuck_simple_xml = $simpleXMLElements[0]->asXml();
-                        $attr_name = explode('@', $mapping)[1]; //find the attribute name
-                        $attr_name = explode(']', $attr_name)[0]; //remove the trailing ]
+                        $attrs = explode('@', $mapping);
+                        $attr_name = $attrs[1]; //find the attribute name
+                        $pieces = explode(']', $attr_name);
+                        $attr_name = $pieces[0]; //remove the trailing ]
                         $value = preg_replace("#.*$attr_name=\"(.*?)\".*#", "$1", $fuck_simple_xml); //parse it out of the xml
                         $cur[$mapping] = $value;
                     }
