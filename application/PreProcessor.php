@@ -17,7 +17,7 @@ class PreProcessor
      */
     private $XpathMappings;
 
-    public function getRecords($xml_file, $record_xpath)
+    public function getRecords($xml_file, $record_xpath = null)
     {
         $this->setContentsFromFilename($xml_file);
         $this->XmlDocument = simplexml_load_string($this->contents);    //  todo this can be cached
@@ -142,7 +142,7 @@ class PreProcessor
     {
         if ($XPATH == null)
         {
-            $XPATH = $this->getAllXpathMappings();
+            $XPATH = $this->getXpathMappings();
         }
 
         $schema = array();

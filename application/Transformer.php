@@ -5,33 +5,36 @@ require_once 'app.php';
 class Transformer
 {
     /**
-     * @param $worksheet
      * @param $xml_file
+     * @param \model\Worksheet $Worksheet
      * @return array
      */
-    public static function react(model\Worksheet $worksheet, $xml_file)
+    public static function react($xml_file, model\Worksheet $Worksheet)
     {
-        $records = PreProcessor::getRecords( $xml_file, $worksheet->record_xpath );
+        $out = array();
+
+        $processor = new PreProcessor();
+        $records = $processor->getRecords($xml_file, $Worksheet->record_xpath);
         foreach ($records as $record)
         {
-
+            $out[] = self::bindRecord($record, $Worksheet->mappings);
         }
-        //run worksheet.record_xpath against $xml_file
-        //foreach result
-        //    bindRecord(result, mapping)
-        //endeach
+        return $out;
     }
 
     /**
      * @param $record
-     * @param $mappings array
+     * @param $Mappings \model\Mapping[]
      * @return array
      */
-    public static function bindRecord($record, $mappings)
+    public static function bindRecord($record, $Mappings)
     {
-        //  foreach $worksheet.mapping
-        //    run mapping.record_xpath against $xml_file
-        //  endeach
+        $out = array();
+        foreach ($Mappings as $Mapping)
+        {
+            $out[$Mapping->label] = $record[$Mapping->formula];
+        }
+        return $out;
     }
 
 }
