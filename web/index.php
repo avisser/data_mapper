@@ -36,6 +36,7 @@ $f3->route('POST /map',
         $schema = model\Schema::load($module);
         $f3->set("xpath", $xpath);
         $f3->set("record_fields", $record_fields);
+        $f3->set("record_fields_arr", json_encode($record_fields));
         $f3->set("schema", $schema);
         $f3->set("module", $module);
         $f3->set("tmp_file", $new_tmp_file);
@@ -50,9 +51,12 @@ $f3->route('POST /mapped',
         $module = $_POST['module'];
         $schema = model\Schema::load($module);
 
+        $record_fields = json_decode($_POST['record_fields_arr'], true);
+
         $ws = new model\Worksheet();
         $ws->module = $module;
         $ws->record_xpath = $_POST['xpath'];
+        $ws->record_fields = array_keys($record_fields);
 
         foreach ($schema['fields'] as $field)
         {
@@ -60,7 +64,7 @@ $f3->route('POST /mapped',
             if ($formula != '-')
             {
                 $mapping = new model\Mapping();
-                $mapping->formula = $formula;
+                $mapping->formula = ($formula == 'custom') ? $_POST[$field['name']."_custom"] : $formula;
                 $mapping->label = $field['name'];
                 $mapping->ours = true;
                 $mapping->type = $field['type'];
