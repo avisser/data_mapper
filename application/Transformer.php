@@ -45,7 +45,22 @@ class Transformer
                 $record_data[$field] = array('safeFieldName' => $safeFieldName, 'value' => str_replace(array("\r\n", "\r", "\n"), "", $field_val));
                 $js_include .= "var ".$safeFieldName." = '".$record_data[$field]['value']."'; ";
             }
+
+            $field_keys = array_keys($record_field_map);
+            usort($field_keys, function($a, $b){
+                $aLen = strlen($a);
+                $bLen = strlen($b);
+
+                if ( $aLen > $bLen ) {
+                    return -1;
+                } else if ( $aLen < $bLen )  {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
         }
+
 
         if (class_exists('V8Js'))
         {
@@ -56,7 +71,7 @@ class Transformer
         foreach ($Mappings as $Mapping)
         {
             $thisFormula = $Mapping->formula;
-            foreach ($record_data as $field => $fieldData)
+            foreach ($field_keys as $field)
             {
                 $thisFormula = str_replace($field, $record_data[$field]['safeFieldName'], $thisFormula);
             }
