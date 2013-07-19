@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:creativeCommons="http://cyber.law.harvard.edu/rss/creativeCommonsRssModule.html"
+     xmlns:flickr="urn:flickr:user">
+    <channel>
+
+
+        <title>Uploads from IESE Business School</title>
+        <link>http://www.flickr.com/photos/94937385@N08/</link>
+        <description></description>
+        <pubDate>Thu, 11 Apr 2013 08:08:25 -0700</pubDate>
+        <lastBuildDate>Thu, 11 Apr 2013 08:08:25 -0700</lastBuildDate>
+        <generator>http://www.flickr.com/</generator>
+        <image>
+            <url>http://l.yimg.com/g/images/buddyicon01.png#94937385@N08</url>
+            <title>Uploads from IESE Business School</title>
+            <link>http://www.flickr.com/photos/94937385@N08/</link>
+        </image>
+
+        <item>
+            <title>IESE North Campus - Q Building</title>
+            <link>http://www.flickr.com/photos/94937385@N08/8639538757/</link>
+            <description>            &lt;p&gt;&lt;a href=&quot;http://www.flickr.com/people/94937385@N08/&quot;&gt;IESE
+                Business School&lt;/a&gt; posted a photo:&lt;/p&gt;
+
+                &lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/94937385@N08/8639538757/&quot; title=&quot;IESE
+                North Campus - Q Building&quot;&gt;&lt;img src=&quot;http://farm9.staticflickr.com/8126/8639538757_65ff26e410_m.jpg&quot;
+                width=&quot;240&quot; height=&quot;160&quot; alt=&quot;IESE North Campus - Q Building&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+            </description>
+            <pubDate>Thu, 11 Apr 2013 08:08:25 -0700</pubDate>
+            <dc:date.Taken>2006-10-10T16:37:23-08:00</dc:date.Taken>
+            <author flickr:profile="http://www.flickr.com/people/94937385@N08/">nobody@flickr.com (IESE Business
+                School)
+            </author>
+            <guid isPermaLink="false">tag:flickr.com,2004:/photo/8639538757</guid>
+            <media:content url="http://farm9.staticflickr.com/8126/8639538757_65ff26e410_b.jpg"
+                           type="image/jpeg"
+                           height="681"
+                           width="1024"/>
+            <media:title>IESE North Campus - Q Building</media:title>
+            <media:thumbnail url="http://farm9.staticflickr.com/8126/8639538757_65ff26e410_s.jpg" height="75"
+                             width="75"/>
+            <media:credit role="photographer">IESE Business School</media:credit>
+        </item>
+    </channel>
+</rss>
