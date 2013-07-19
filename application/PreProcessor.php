@@ -31,7 +31,18 @@ class PreProcessor
             foreach ($schema as $mapping)
             {
                 $simpleXMLElements = $Record->xpath($mapping);
-                $cur[$mapping] = trim(array_pop($simpleXMLElements));
+                if (strstr($mapping, '@'))
+                {
+                    if ( count($simpleXMLElements) > 0)
+                    {
+                        $debug = array_pop($simpleXMLElements)->attributes['value'];
+                        $cur[$mapping] = $debug;
+                    }
+                }
+                else
+                {
+                    $cur[$mapping] = trim(array_pop($simpleXMLElements));
+                }
             }
             $out[] = $cur;
         }

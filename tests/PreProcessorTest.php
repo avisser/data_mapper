@@ -122,6 +122,17 @@ XSL;
 
     }
 
+    function testAttributeRecordParsing()
+    {
+        $proc = new PreProcessor();
+        $records = $proc->getRecords($this->sample('photos_rss_small.xml'), '/rss/channel/item');
+
+        //only 1
+        $record = $records[0];
+
+        $this->assertEquals("http://farm9.staticflickr.com/8126/8639538757_65ff26e410_b.jpg", $record['media:content[@url]']);
+    }
+
     function testBar()
     {
         $proc = new PreProcessor();
