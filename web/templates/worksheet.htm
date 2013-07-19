@@ -13,7 +13,7 @@
 
     <div class="col1">
         <p>We detected your <span class="worksheet_record">record</span> nodes can be found xpath =>  <b>{{ @xpath }}</b></p>
-
+        <p>We've detected these fields in your <span class="worksheet_record">record</span>:</p>
         <ul>
             <repeat group="{{ @record_fields }}" value="{{ @field }}">
                 <li>{{ trim(@field) }}</li>
@@ -23,12 +23,10 @@
 
     <form method="POST" action="/mapped" id="mapped">
     <div class="col2">
-        <p>We've detected these fields in your <span class="worksheet_record">record</span>:</p>
-
             <input type="hidden" name="module" value="{{@module}}"/>
             <input type="hidden" name="xpath" value="{{@xpath}}"/>
             <input type="hidden" name="tmp_file" value="{{@tmp_file}}"/>
-            <h5>Please map them to our schema for {{ @module }}</h5>
+            <h5 style="margin-top: 0">Please map them to our schema for {{ @module }}</h5>
             <ul>
                 <repeat group="{{ @schema['fields'] }}" value="{{ @field }}">
                     <li>{{ trim(@field['name']) }}

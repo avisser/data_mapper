@@ -30,8 +30,6 @@ h1 {
     width: 400px;
 }
 .cm-s-default {
-    width: 47%;
-    float:left;
     white-space: pre;
     word-break: inherit;
     overflow: auto;
