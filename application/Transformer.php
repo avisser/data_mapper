@@ -41,7 +41,8 @@ class Transformer
         {
             foreach ($record_field_map as $field => $safeFieldName)
             {
-                $record_data[$field] = array('safeFieldName' => $safeFieldName, 'value' => str_replace(array("\r\n", "\r", "\n"), "", $record[$field]));
+                $field_val = (array_key_exists($field, $record)) ? $record[$field] : "";
+                $record_data[$field] = array('safeFieldName' => $safeFieldName, 'value' => str_replace(array("\r\n", "\r", "\n"), "", $field_val));
                 $js_include .= "var ".$safeFieldName." = '".$record_data[$field]['value']."'; ";
             }
         }
