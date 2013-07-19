@@ -43,6 +43,10 @@ class PreProcessor
      */
     public function getXpathMappings()
     {
+        if (!$this->XpathMappings)
+        {
+            return $this->getAllXpathMappings();
+        }
         return $this->XpathMappings;
     }
 
@@ -119,6 +123,7 @@ class PreProcessor
     public function killCache()
     {
         $this->XmlDocument = null;
+        $this->XpathMappings = array();
     }
 
     /**
