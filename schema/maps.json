@@ -1,0 +1,26 @@
+{
+  "recordNode": "building",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "not_null": true
+    },
+    {
+
+      "name": "latitude",
+      "type": "latitude",
+      "not_null": true
+    },
+    {
+      "name": "longitude",
+      "type": "longitude",
+      "not_null": true
+    },
+    {
+      "name": "address",
+      "type": "string",
+      "not_null": true
+    }
+  ]
+}
