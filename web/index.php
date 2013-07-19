@@ -18,7 +18,7 @@ $f3->set('dump', function($a) {
 $f3->route('GET /',
     function () {
         $template = new Template();
-        echo $template->render('template.htm');
+        echo $template->render('index.htm');
     });
 
 $f3->route('POST /map',
@@ -56,13 +56,17 @@ $f3->route('POST /mapped',
 
         foreach ($schema['fields'] as $field)
         {
-            $mapping = new model\Mapping();
-            $mapping->formula = $_POST[$field['name']];
-            $mapping->label = $field['name'];
-            $mapping->ours = true;
-            $mapping->type = $field['type'];
+            $formula = $_POST[$field['name']];
+            if ($formula != '-')
+            {
+                $mapping = new model\Mapping();
+                $mapping->formula = $formula;
+                $mapping->label = $field['name'];
+                $mapping->ours = true;
+                $mapping->type = $field['type'];
 
-            $ws->mappings[] = $mapping;
+                $ws->mappings[] = $mapping;
+            }
         }
 
         $xml_file = $_POST['tmp_file'];
