@@ -26,6 +26,7 @@
             <input type="hidden" name="module" value="{{@module}}"/>
             <input type="hidden" name="xpath" value="{{@xpath}}"/>
             <input type="hidden" name="tmp_file" value="{{@tmp_file}}"/>
+            <input type="hidden" name="record_fields_arr" value="{{@record_fields_arr}}"/>
             <h5 style="margin-top: 0">Please map them to our schema for {{ @module }}</h5>
             <ul>
                 <repeat group="{{ @schema['fields'] }}" value="{{ @field }}">
@@ -34,8 +35,11 @@
                             <repeat group="{{ @record_fields }}" value="{{ @rfield }}">
                                 <option value="{{ trim(@rfield) }}">{{ trim(@rfield) }}</option>
                             </repeat>
-                            <option value="Photos">Photos</option>
+                            <option value="custom">Custom...</option>
                         </select><br/>
+                        <span id="{{ trim(@field['name']) }}_custom_entry" style="display: none">
+                            Formula: <input type="text" name="{{ trim(@field['name']) }}_custom" style="width: 200px" />
+                        </span>
                     </li>
                 </repeat>
             </ul>
@@ -47,5 +51,17 @@
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('select').change(function(event) {
+        var field_name =  $(this).attr('name');
+        if ( $(this).val() == 'custom') {
+            $('#' + field_name + '_custom_entry').show();
+        } else {
+            $('#' + field_name + '_custom_entry').hide();
+        }
+    });
+});
+</script>
 </body>
 </html>

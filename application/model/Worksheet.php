@@ -9,5 +9,6 @@ class Worksheet
      */
     public $mappings = array();
     public $record_xpath;
+    public $record_fields;
     public $module;
 }
