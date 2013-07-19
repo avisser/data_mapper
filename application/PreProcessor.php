@@ -31,7 +31,21 @@ class PreProcessor
             foreach ($schema as $mapping)
             {
                 $simpleXMLElements = $Record->xpath($mapping);
-                $cur[$mapping] = trim(array_pop($simpleXMLElements));
+                if (strstr($mapping, '@'))
+                {
+                    if ( count($simpleXMLElements) > 0)
+                    {
+                        $fuck_simple_xml = $simpleXMLElements[0]->asXml();
+                        $attr_name = explode('@', $mapping)[1]; //find the attribute name
+                        $attr_name = explode(']', $attr_name)[0]; //remove the trailing ]
+                        $value = preg_replace("#.*$attr_name=\"(.*?)\".*#", "$1", $fuck_simple_xml); //parse it out of the xml
+                        $cur[$mapping] = $value;
+                    }
+                }
+                else
+                {
+                    $cur[$mapping] = trim(array_pop($simpleXMLElements));
+                }
             }
             $out[] = $cur;
         }
@@ -155,14 +169,34 @@ class PreProcessor
 
             $pattern = '#' . $record_xpath . '(\[[0-9]+\])?\/#';
             $path = preg_replace($pattern, '', $path);
-            $pieces = preg_split('/[=\[]/', $path);
+            $pieces = explode('=', $path);
             $tag = $pieces[0];
+            if ( strstr($tag, "[@") )
+            {
+                $tag = "$tag]";
+                $tag = $this->removeAttributeNamespace($tag);
+            }
+
 
             if (!isset($schema[$tag]))
             {
-                $schema[$tag] = $tag;
+                $schema[] = $tag;
             }
         }
-        return $schema;
+        return array_unique($schema);
+    }
+
+    /**
+     * @param $record_xpath
+     * @return mixed
+     */
+    public function removeAttributeNamespace($record_xpath)
+    {
+        $attribute_xpath = preg_replace("#(.*)@(.*):(.*)#", "$1@$3", $record_xpath);
+        if (strlen($attribute_xpath) > 0) {
+            $record_xpath = $attribute_xpath;
+            return $record_xpath;
+        }
+        return $record_xpath;
     }
 }
