@@ -33,8 +33,11 @@ function getWorksheetDir()
 //});
 
 $f3->route('GET /',
-    function () {
+    function ($f3) {
         $template = new Template();
+        $schemas = array('Maps', 'Photos');
+        $schemas = model\Schema::all();
+        $f3->set('schemas', $schemas);
         echo $template->render('index.htm');
     });
 

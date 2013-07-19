@@ -24,8 +24,9 @@
         <div class="inputRow">
             Select your module:<br/>
             <select name="module" form="map">
-                <option value="Photos">Photos</option>
-                <option value="Maps">Buildings</option>
+            <repeat group="{{ @schemas }}" value="{{ @schema }}">
+                <option value="{{@schema}}">{{@schema}}</option>
+            </repeat>
             </select>
         </div>
 
