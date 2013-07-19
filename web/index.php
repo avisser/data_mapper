@@ -70,6 +70,7 @@ $f3->route('POST /mapped',
         //foreach entry in the schema
         $module = $_POST['module'];
         $schema = model\Schema::load($module);
+        $f3->set('module', $module);
 
         $record_fields = json_decode($_POST['record_fields_arr'], true);
 
@@ -97,10 +98,15 @@ $f3->route('POST /mapped',
         $transformed_data = Transformer::react($xml_file, $ws);
 
         $f3->set('ESCAPE',FALSE);
+        $f3->set('tmp_file', $xml_file);
         $f3->set('ws', $ws);
         $f3->set('transformed_data', $transformed_data);
-        $f3->set('transformed_data_xml', Serializer::ArrayToXml($transformed_data, $schema['recordNode']));
+        $transformed_xml = $f3->set('transformed_data_xml', Serializer::ArrayToXml($transformed_data, $schema['recordNode']));
         $f3->set('input_data_xml', file_get_contents($xml_file));
+
+        $new_tmp_file = tempnam(APP_PATH . '/../tmp/', $module);
+        file_put_contents("$new_tmp_file.xml", $transformed_xml);
+        $f3->set('dl_xml_path', basename($new_tmp_file));
 
         $worksheet_dir = getWorksheetDir();
         $worksheet_name = isset($_POST['ws_name']) ? $_POST['ws_name'] : 'no_name';
@@ -112,6 +118,14 @@ $f3->route('POST /mapped',
         $template = new Template();
         echo $template->render('mapped.htm');
 
+    });
+
+$f3->route('GET /xml/@filename',
+    function($f3, $args) {
+        $filename = $args['filename'];
+        if (!Web::instance()->send(APP_PATH . "/../tmp/$filename.xml"))
+            // Generate an HTTP 404
+        $f3->error(404);
     });
 
 $f3->route('GET /worksheet/@filename',
