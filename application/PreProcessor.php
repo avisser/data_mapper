@@ -46,16 +46,30 @@ class PreProcessor
         return $this->XpathMappings;
     }
 
+    /**
+     * @param $contents
+     */
     public function setContents($contents)
     {
-        $this->contents = $contents;
+        if ($this->contents != $contents)
+        {
+            $this->contents = $contents;
+            $this->killCache();
+        }
     }
 
+    /**
+     * @param $filename
+     */
     public function setContentsFromFilename($filename)
     {
-        $this->contents = file_get_contents($filename);
+        $new = file_get_contents($filename);
+        $this->setContents($new);
     }
 
+    /**
+     * @return string
+     */
     public function getXslWorksheet()
     {
         return file_get_contents(ALL_XSLT);
@@ -68,7 +82,7 @@ class PreProcessor
             $this->setContentsFromFilename($filename);
         }
 
-        $all_xpaths = $this->getAllXpathMappings($this->contents, $this->getXslWorksheet());
+        $all_xpaths = $this->getAllXpathMappings();
 
         $record_path = NULL;
         foreach ($all_xpaths as $p1)
@@ -84,14 +98,11 @@ class PreProcessor
 
     public function getAllXpathMappings($xml = null, $xsl = null)
     {
-        if (!$xml)
+        if ($xml)
         {
-            $xml = $this->contents;
+            $this->setContents($xml);
         }
-        else
-        {
-            $this->contents = $xml;
-        }
+
         if (!$xsl)
         {
             $xsl = $this->getXslWorksheet();
@@ -99,7 +110,7 @@ class PreProcessor
 
         $xslt = new XSLTProcessor();
         $xslt->importStylesheet(new SimpleXMLElement($xsl));
-        $xpath_str = $xslt->transformToXml($this->getXmlDoc($xml));
+        $xpath_str = $xslt->transformToXml($this->getXmlDoc());
         $this->XpathMappings = explode("\n", $xpath_str);
 
         return $this->XpathMappings;
@@ -111,14 +122,13 @@ class PreProcessor
     }
 
     /**
-     * @param $xml
      * @return SimpleXMLElement
      */
-    public function getXmlDoc($xml)
+    public function getXmlDoc()
     {
         if (!$this->XmlDocument)
         {
-            $this->XmlDocument = new SimpleXMLElement($xml);
+            $this->XmlDocument = new SimpleXMLElement($this->contents);
         }
         return $this->XmlDocument;
     }
