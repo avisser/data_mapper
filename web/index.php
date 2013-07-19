@@ -70,6 +70,7 @@ $f3->route('POST /mapped',
 
         $f3->set('ws', $ws);
         $f3->set('transformed_data', $transformed_data);
+        $f3->set('transformed_data_xml', Serializer::ArrayToXml($transformed_data));
 
         $template = new Template();
         echo $template->render('mapped.htm');

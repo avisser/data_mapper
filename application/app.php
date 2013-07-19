@@ -11,6 +11,7 @@ function my_autoloader($class)
 
     return false;
 }
+date_default_timezone_set('America/Los_Angeles');
 
 spl_autoload_register('my_autoloader');
 
