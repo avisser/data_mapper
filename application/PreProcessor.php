@@ -2,11 +2,20 @@
 
 class PreProcessor
 {
+    /**
+     * @var string
+     */
     private $contents;
+
     /**
      * @var SimpleXmlElement
      */
     private $XmlDocument;
+
+    /**
+     * @var array
+     */
+    private $XpathMappings;
 
     public function getRecords($xml_file, $record_xpath)
     {
@@ -27,6 +36,14 @@ class PreProcessor
             $out[] = $cur;
         }
         return $out;
+    }
+
+    /**
+     * @return array
+     */
+    public function getXpathMappings()
+    {
+        return $this->XpathMappings;
     }
 
     public function setContents($contents)
@@ -51,10 +68,10 @@ class PreProcessor
             $this->setContentsFromFilename($filename);
         }
 
-        $all_xpaths = $this->transform($this->contents, $this->getXslWorksheet());
+        $all_xpaths = $this->getAllXpathMappings($this->contents, $this->getXslWorksheet());
 
         $record_path = NULL;
-        foreach (explode("\n", $all_xpaths) as $p1)
+        foreach ($all_xpaths as $p1)
         {
             if (preg_match("/\[[0-9]+\]/", $p1))
             {
@@ -65,7 +82,7 @@ class PreProcessor
         return $record_path;
     }
 
-    public function transform($xml = null, $xsl = null)
+    public function getAllXpathMappings($xml = null, $xsl = null)
     {
         if (!$xml)
         {
@@ -82,7 +99,10 @@ class PreProcessor
 
         $xslt = new XSLTProcessor();
         $xslt->importStylesheet(new SimpleXMLElement($xsl));
-        return $xslt->transformToXml($this->getXmlDoc($xml));
+        $xpath_str = $xslt->transformToXml($this->getXmlDoc($xml));
+        $this->XpathMappings = explode("\n", $xpath_str);
+
+        return $this->XpathMappings;
     }
 
     public function killCache()
@@ -107,7 +127,7 @@ class PreProcessor
     {
         if ($XPATH == null)
         {
-            $XPATH = explode("\n", $this->transform());
+            $XPATH = $this->getAllXpathMappings();
         }
 
         $schema = array();

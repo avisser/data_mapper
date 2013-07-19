@@ -2,7 +2,7 @@
 
 require_once 'TestBase.php';
 
-class TransformTest extends TestBase
+class PreProcessorTest extends TestBase
 {
     function testFindHighCardinalityNode()
     {
