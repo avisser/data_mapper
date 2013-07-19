@@ -6,7 +6,7 @@ class TransformTest extends TestBase
 {
     function testFindHighCardinalityNode()
     {
-        $transform = new Transformer();
+        $transform = new PreProcessor();
         $samples = array(
             'buildings1.xml' => '/data/bldg',
             'buildings2.xml' => '/data/bldg',
@@ -17,7 +17,7 @@ class TransformTest extends TestBase
 
         foreach ($samples as $sample => $xpath)
         {
-            $output = $transform->getRecordNode($this->sample($sample));
+            $output = $transform->getRecordXPath($this->sample($sample));
             $this->assertEquals($xpath, $output);
             $transform->killCache();
         }
@@ -25,7 +25,7 @@ class TransformTest extends TestBase
 
     function testGetRecordSchemaBldgs1()
     {
-        $transform = new Transformer();
+        $transform = new PreProcessor();
         $XPATH = <<<XPATH
 /data/bldg/name='Bldg 1'
 /data/bldg/lat='37.789413'
@@ -53,7 +53,7 @@ XPATH;
 
     function testGetRecordSchemaPhotos()
     {
-        $transform = new Transformer();
+        $transform = new PreProcessor();
         $XPATH = file_get_contents($this->sample('photos.txt'));
 
         $XPATH = explode("\n", $XPATH);
@@ -68,7 +68,7 @@ XPATH;
 
     function testFoo()
     {
-        $transform = new Transformer();
+        $transform = new PreProcessor();
         $XPATH = file_get_contents($this->sample('bldgs3.txt'));
 
         $XPATH = explode("\n", $XPATH);
@@ -79,5 +79,21 @@ XPATH;
         {
             $this->assertContains($field, $schema);
         }
+    }
+
+    function testExtract()
+    {
+        $transform = new PreProcessor();
+        $content = file_get_contents($this->sample('buildings1.xml'));
+        $results = $transform->getRecords($this->sample('buildings1.xml'), '/data/bldg');
+
+        $expected = array(
+            array('name' => 'Bldg 1', 'lat' => '37.789413', 'lon' => '-122.425827'),
+            array('name' => 'Bldg 2', 'lat' => '37.789413', 'lon' => '-122.425827'),
+            array('name' => 'Bldg 3', 'lat' => '37.789413', 'lon' => '-122.425827'),
+            array('name' => 'Bldg 4', 'lat' => '37.789413', 'lon' => '-122.425827')
+        )
+
+        $this->assertEquals($expected, $results);
     }
 }
