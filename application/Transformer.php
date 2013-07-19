@@ -65,7 +65,7 @@ class Transformer
             {
                 $out[$Mapping->label] = $v8->executeString($js_include." ".$thisFormula);
             } else {
-                $out[$Mapping->label] = $record[$Mapping->formula];
+                $out[$Mapping->label] = array_key_exists($Mapping->formula, $record) ? $record[$Mapping->formula] : "";
             }
         }
         return $out;
