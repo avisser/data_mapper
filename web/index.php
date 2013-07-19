@@ -18,7 +18,7 @@ $f3->set('dump', function($a) {
 $f3->route('GET /',
     function () {
         $template = new Template();
-        echo $template->render('template.htm');
+        echo $template->render('index.htm');
     });
 
 $f3->route('POST /map',
@@ -60,13 +60,17 @@ $f3->route('POST /mapped',
 
         foreach ($schema['fields'] as $field)
         {
-            $mapping = new model\Mapping();
-            $mapping->formula = ($_POST[$field['name']] == 'custom') ? $_POST[$field['name']."_custom"] : $_POST[$field['name']];
-            $mapping->label = $field['name'];
-            $mapping->ours = true;
-            $mapping->type = $field['type'];
+            $formula = $_POST[$field['name']];
+            if ($formula != '-')
+            {
+                $mapping = new model\Mapping();
+                $mapping->formula = ($formula == 'custom') ? $_POST[$field['name']."_custom"] : $formula;
+                $mapping->label = $field['name'];
+                $mapping->ours = true;
+                $mapping->type = $field['type'];
 
-            $ws->mappings[] = $mapping;
+                $ws->mappings[] = $mapping;
+            }
         }
 
         $xml_file = $_POST['tmp_file'];
@@ -77,6 +81,15 @@ $f3->route('POST /mapped',
         $f3->set('transformed_data', $transformed_data);
         $f3->set('transformed_data_xml', Serializer::ArrayToXml($transformed_data, $schema['recordNode']));
         $f3->set('input_data_xml', file_get_contents($xml_file));
+
+        $worksheet_dir = APP_PATH."/../worksheets";
+        if (!stat($worksheet_dir))
+        {
+            mkdir($worksheet_dir);
+        }
+        $worksheet_name = isset($_POST['ws_name']) ? $_POST['ws_name'] : 'no_name';
+
+        file_put_contents("$worksheet_dir/$worksheet_name.json", $ws->serialize());
 
         $template = new Template();
         echo $template->render('mapped.htm');

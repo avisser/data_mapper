@@ -36,6 +36,7 @@
                                 <option value="{{ trim(@rfield) }}">{{ trim(@rfield) }}</option>
                             </repeat>
                             <option value="custom">Custom...</option>
+                            <option value="-">N/A</option>
                         </select><br/>
                         <span id="{{ trim(@field['name']) }}_custom_entry" style="display: none">
                             Formula: <input type="text" name="{{ trim(@field['name']) }}_custom" style="width: 200px" />
@@ -43,6 +44,7 @@
                     </li>
                 </repeat>
             </ul>
+            <h5>Worksheet Name (optional): <input type="text" name="ws_name" width="76" /></h3>
             <span style="width:400px; padding-left: 120px"><input type="submit" class="btn" value="submit"/> </span>
         </form>
     </div>
