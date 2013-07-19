@@ -8,6 +8,18 @@ class PreProcessor
      */
     private $XmlDocument;
 
+    public static function getRecords($xml_file, $record_xpath)
+    {
+        $Xml = simplexml_load_file($xml_file);
+        $Records = $Xml->xpath($record_xpath);
+
+        $out = array();
+        foreach ($Records as $Record)
+        {
+
+        }
+    }
+
     public function setContents($contents)
     {
         $this->contents = $contents;

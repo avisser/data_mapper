@@ -6,7 +6,7 @@ class TransformTest extends TestBase
 {
     function testFindHighCardinalityNode()
     {
-        $transform = new PreProcessor();
+        $PreProcessor = new PreProcessor();
         $samples = array(
             'buildings1.xml' => '/data/bldg',
             'buildings2.xml' => '/data/bldg',
@@ -17,9 +17,9 @@ class TransformTest extends TestBase
 
         foreach ($samples as $sample => $xpath)
         {
-            $output = $transform->getRecordXPath($this->sample($sample));
+            $output = $PreProcessor->getRecordXPath($this->sample($sample));
             $this->assertEquals($xpath, $output);
-            $transform->killCache();
+            $PreProcessor->killCache();
         }
     }
 
@@ -53,12 +53,12 @@ XPATH;
 
     function testGetRecordSchemaPhotos()
     {
-        $transform = new PreProcessor();
+        $PreProcessor = new PreProcessor();
         $XPATH = file_get_contents($this->sample('photos.txt'));
 
         $XPATH = explode("\n", $XPATH);
         $prefix = '/rss/channel/item';
-        $schema = $transform->getRecordSchema($XPATH, $prefix);
+        $schema = $PreProcessor->getRecordSchema($XPATH, $prefix);
         $expected = array('title', 'link', 'description', 'pubDate', 'dc:date.Taken', 'author', 'guid', 'media:content', 'media:title', 'media:credit', 'media:thumbnail');
         foreach ($expected as $field)
         {
@@ -68,12 +68,12 @@ XPATH;
 
     function testFoo()
     {
-        $transform = new PreProcessor();
+        $PreProcessor = new PreProcessor();
         $XPATH = file_get_contents($this->sample('bldgs3.txt'));
 
         $XPATH = explode("\n", $XPATH);
         $prefix = '/data/bldg';
-        $schema = $transform->getRecordSchema($XPATH, $prefix);
+        $schema = $PreProcessor->getRecordSchema($XPATH, $prefix);
         $expected = array('name' , 'geocode/latitude', 'geocode/longitude');
         foreach ($expected as $field)
         {
@@ -83,16 +83,16 @@ XPATH;
 
     function testExtract()
     {
-        $transform = new PreProcessor();
+        $PreProcessor = new PreProcessor();
         $content = file_get_contents($this->sample('buildings1.xml'));
-        $results = $transform->getRecords($this->sample('buildings1.xml'), '/data/bldg');
+        $results = $PreProcessor->getRecords($this->sample('buildings1.xml'), '/data/bldg');
 
         $expected = array(
             array('name' => 'Bldg 1', 'lat' => '37.789413', 'lon' => '-122.425827'),
             array('name' => 'Bldg 2', 'lat' => '37.789413', 'lon' => '-122.425827'),
             array('name' => 'Bldg 3', 'lat' => '37.789413', 'lon' => '-122.425827'),
             array('name' => 'Bldg 4', 'lat' => '37.789413', 'lon' => '-122.425827')
-        )
+        );
 
         $this->assertEquals($expected, $results);
     }
