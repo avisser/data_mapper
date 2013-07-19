@@ -118,4 +118,11 @@ XSL;
         $this->assertEquals( $expected, $fields );
 
     }
+
+    function testBar()
+    {
+        $proc = new PreProcessor();
+        $new_xpath = $proc->removeAttributeNamespace("author@flickr:profile");
+        $this->assertEquals("author@profile", $new_xpath);
+    }
 }

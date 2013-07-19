@@ -156,7 +156,13 @@ class PreProcessor
             $pattern = '#' . $record_xpath . '(\[[0-9]+\])?\/#';
             $path = preg_replace($pattern, '', $path);
             $pieces = explode('=', $path);
-            $tag =  $tag = str_replace("[@", "@", $pieces[0]);// preg_replace( "##", "##", $pieces[0]);
+            $tag = $pieces[0];
+            if ( strstr($tag, "[@") )
+            {
+                $tag = "$tag]";
+                $tag = $this->removeAttributeNamespace($tag);
+            }
+
 
             if (!isset($schema[$tag]))
             {
@@ -164,5 +170,19 @@ class PreProcessor
             }
         }
         return array_unique($schema);
+    }
+
+    /**
+     * @param $record_xpath
+     * @return mixed
+     */
+    public function removeAttributeNamespace($record_xpath)
+    {
+        $attribute_xpath = preg_replace("#(.*)@(.*):(.*)#", "$1@$3", $record_xpath);
+        if (strlen($attribute_xpath) > 0) {
+            $record_xpath = "/$attribute_xpath";
+            return $record_xpath;
+        }
+        return $record_xpath;
     }
 }
