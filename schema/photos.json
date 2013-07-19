@@ -1,0 +1,50 @@
+{
+    "recordNode": "record",
+    "fields":
+    [
+        {
+            "title": {
+                "type": "string",
+                "not_null": true
+            }
+        },
+        {
+            "description": {
+                "type": "string",
+                "not_null": false
+            }
+        },
+        {
+            "thumbnailURL": {
+                "type": "string",
+                "not_null": true
+            }
+        },
+        {
+            "contentURL": {
+                "type": "string",
+                "not_null": true
+            }
+        },
+        {
+            "copyrightURL": {
+                "type": "string",
+                "not_null": false
+            }
+        },
+        {
+            "date": {
+                "type": "date",
+                "not_null": false
+            }
+        },
+        {
+            "timezone": {
+                "type": "date",
+                "not_null": false
+            }
+        }
+    ]
+
+
+}
