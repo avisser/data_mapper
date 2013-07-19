@@ -3,6 +3,10 @@
 class Transformer
 {
     private $contents;
+    /**
+     * @var SimpleXmlElement
+     */
+    private $XmlDocument;
 
     public function setContents($contents)
     {
@@ -40,11 +44,69 @@ class Transformer
         return $record_path;
     }
 
-    function transform($xml, $xsl)
+    public function transform($xml = null, $xsl = null)
     {
+        if (!$xml)
+        {
+            $xml = $this->contents;
+        }
+        else
+        {
+            $this->contents = $xml;
+        }
+        if (!$xsl)
+        {
+            $xsl = $this->getXslWorksheet();
+        }
+
         $xslt = new XSLTProcessor();
         $xslt->importStylesheet(new SimpleXMLElement($xsl));
-        return $xslt->transformToXml(new SimpleXMLElement($xml));
+        return $xslt->transformToXml($this->getXmlDoc($xml));
     }
 
+    public function getAllMappingsFromNode($record_path)
+    {
+        $Records = $this->XmlDocument->xpath($this->getRecordNode());
+    }
+
+    public function killCache()
+    {
+        $this->XmlDocument = null;
+    }
+
+    /**
+     * @param $xml
+     * @return SimpleXMLElement
+     */
+    public function getXmlDoc($xml)
+    {
+        if (!$this->XmlDocument)
+        {
+            $this->XmlDocument = new SimpleXMLElement($xml);
+        }
+        return $this->XmlDocument;
+    }
+
+    public function getRecordSchema($XPATH = null, $prefix = null)
+    {
+        $schema = array();
+        foreach ($XPATH as $path)
+        {
+            if (strpos($path, $prefix) === false)
+            {
+                continue;
+            }
+
+            $pattern = '#' . $prefix . '(\[[0-9]+\])?\/#';
+            $path = preg_replace($pattern, '', $path);
+            $pieces = preg_split('/[=\[]/', $path);
+            $tag = $pieces[0];
+
+            if (!isset($schema[$tag]))
+            {
+                $schema[$tag] = $tag;
+            }
+        }
+        return $schema;
+    }
 }
