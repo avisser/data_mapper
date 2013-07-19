@@ -24,12 +24,14 @@
 
     <h3>Transformation complete!</h3>
     <p><a href="/">Try another!</a></p>
+    <p><a href="/worksheet/{{ @worksheet }}">Download your worksheet</a></p>
+
     <div style="float:left; width: 47%; margin-right: 25px">
         <h5>Input XML</h5>
         <pre id="outInputXml" class="cm-s-default" style="margin-right: 25px;"></pre>
     </div>
     <div style="float:left; width: 47%; ">
-        <h5>Transformed XML</h5>
+        <h5>Transformed XML <!--&nbsp;<a href="/xml/{{@worksheet}}">Download</a>--></h5>
         <pre id="outOutputXml" class="cm-s-default"></pre>
     </div>
 </div>

@@ -13,6 +13,19 @@ $f3->set('ifset', function($a, $b) {
         echo $a[$b];
 });
 
+/**
+ * @return string
+ */
+function getWorksheetDir()
+{
+    $worksheet_dir = APP_PATH . "/../worksheets";
+    if (!stat($worksheet_dir)) {
+        mkdir($worksheet_dir);
+        return $worksheet_dir;
+    }
+    return $worksheet_dir;
+}
+
 
 //$f3->route('GET /',
 //function () {
@@ -89,17 +102,23 @@ $f3->route('POST /mapped',
         $f3->set('transformed_data_xml', Serializer::ArrayToXml($transformed_data, $schema['recordNode']));
         $f3->set('input_data_xml', file_get_contents($xml_file));
 
-        $worksheet_dir = APP_PATH."/../worksheets";
-        if (!stat($worksheet_dir))
-        {
-            mkdir($worksheet_dir);
-        }
+        $worksheet_dir = getWorksheetDir();
         $worksheet_name = isset($_POST['ws_name']) ? $_POST['ws_name'] : 'no_name';
 
-        file_put_contents("$worksheet_dir/$worksheet_name.json", $ws->serialize());
+        $ws_path = "$worksheet_dir/$worksheet_name.json";
+        file_put_contents($ws_path, $ws->serialize());
+        $f3->set('worksheet', $worksheet_name);
 
         $template = new Template();
         echo $template->render('mapped.htm');
 
+    });
+
+$f3->route('GET /worksheet/@filename',
+    function($f3, $args)  {
+        $filename = $args['filename'];
+        if (!Web::instance()->send(getWorksheetDir()."/$filename.json"))
+            // Generate an HTTP 404
+        $f3->error(404);
     });
 $f3->run();
