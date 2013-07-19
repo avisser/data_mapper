@@ -33,15 +33,17 @@ class Transformer
      * @param $Mappings \model\Mapping[]
      * @return array
      */
-    public static function bindRecord($record, $Mappings, $record_field_map)
+    public static function bindRecord($record, $Mappings, $record_field_map=NULL)
     {
         $record_data = array();
         $js_include = "";
-        $variable_map = array();
-        foreach ($record_field_map as $field => $safeFieldName)
+        if (isset($record_field_map))
         {
-            $record_data[$field] = array('safeFieldName' => $safeFieldName, 'value' => str_replace(array("\r\n", "\r", "\n"), "", $record[$field]));
-            $js_include .= "var ".$safeFieldName." = '".$record_data[$field]['value']."'; ";
+            foreach ($record_field_map as $field => $safeFieldName)
+            {
+                $record_data[$field] = array('safeFieldName' => $safeFieldName, 'value' => str_replace(array("\r\n", "\r", "\n"), "", $record[$field]));
+                $js_include .= "var ".$safeFieldName." = '".$record_data[$field]['value']."'; ";
+            }
         }
 
         if (class_exists('V8Js'))
@@ -58,7 +60,7 @@ class Transformer
                 $thisFormula = str_replace($field, $record_data[$field]['safeFieldName'], $thisFormula);
             }
 
-            if (class_exists('V8Js'))
+            if (class_exists('V8Js') && isset($record_field_map))
             {
                 $out[$Mapping->label] = $v8->executeString($js_include." ".$thisFormula);
             } else {
