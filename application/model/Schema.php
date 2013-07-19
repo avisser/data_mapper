@@ -11,7 +11,7 @@ class Schema
 
     public static function all()
     {
-        $files = glob(APP_PATH . "/../schema/*");
+        $files = glob(APP_PATH . "/../schema/*.json");
         $massaged = array();
         foreach ($files as $file)
         {
