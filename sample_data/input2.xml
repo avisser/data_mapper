@@ -6,7 +6,7 @@
         <homeVisitor>V</homeVisitor>
         <homeImageURL>http://grfx.cstv.com/graphics/school-logos/smis-lg.png</homeImageURL>
         <awayImageURL>http://grfx.cstv.com/graphics/school-logos/ecu-lg.png</awayImageURL>
-        <location>Houston, Texas</location>
+        <location>"Houston, Texas"</location>
         <date_tba>false</date_tba>
     </MAScore>
     <MAScore>
@@ -16,7 +16,7 @@
         <homeVisitor>V</homeVisitor>
         <homeImageURL>http://grfx.cstv.com/graphics/school-logos/tul-lg.png</homeImageURL>
         <awayImageURL>http://grfx.cstv.com/graphics/school-logos/ecu-lg.png</awayImageURL>
-        <location>Houston, Texas</location>
+        <location>"Houston, Texas"</location>
         <date_tba>false</date_tba>
     </MAScore>
     <MAScore>
@@ -26,7 +26,7 @@
         <homeVisitor>T</homeVisitor>
         <homeImageURL>http://grfx.cstv.com/graphics/school-logos/-lg.png</homeImageURL>
         <awayImageURL>http://grfx.cstv.com/graphics/school-logos/ecu-lg.png</awayImageURL>
-        <location>Houston, Texas</location>
+        <location>"Houston, Texas"</location>
         <date_tba>false</date_tba>
     </MAScore>
 </data>

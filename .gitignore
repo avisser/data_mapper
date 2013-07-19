@@ -10,3 +10,4 @@ atlassian-ide-plugin.xml
 [T|t]humbs.db
 \._*
 /nbproject/private/
+web/tmp/

@@ -1,3 +1,70 @@
-{{ @dump(@ws) }}
-<br/><br/>
-{{ @dump(@transformed_data) }}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transformation Complete!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/bootstrap/css/data_mapper.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="/style/CodeMirror/codemirror.css">
+    <script src="/style/CodeMirror/codemirror.js"></script>
+    <script src="/style/CodeMirror/runmode.js"></script>
+    <script src="/style/CodeMirror/xml.js"></script>
+</head>
+<body>
+
+<div class="container-narrow">
+
+    {{ @dump(@ws) }}
+    <br/><br/>
+    {{ @dump(@transformed_data) }}
+
+    <div id="inInputXml" style="display:none">
+<data>
+<MAScore>
+<homeScore>7</homeScore>
+<awayScore>8</awayScore>
+<stringScore>W, 8-7</stringScore>
+<homeVisitor>V</homeVisitor>
+<homeImageURL>http://grfx.cstv.com/graphics/school-logos/smis-lg.png</homeImageURL>
+<awayImageURL>http://grfx.cstv.com/graphics/school-logos/ecu-lg.png</awayImageURL>
+<location>"Houston, Texas"</location>
+<date_tba>false</date_tba>
+</MAScore>
+<MAScore>
+<homeScore>6</homeScore>
+<awayScore>5</awayScore>
+<stringScore>L, 6-5</stringScore>
+<homeVisitor>V</homeVisitor>
+<homeImageURL>http://grfx.cstv.com/graphics/school-logos/tul-lg.png</homeImageURL>
+<awayImageURL>http://grfx.cstv.com/graphics/school-logos/ecu-lg.png</awayImageURL>
+<location>"Houston, Texas"</location>
+<date_tba>false</date_tba>
+</MAScore>
+<MAScore>
+<homeScore>9</homeScore>
+<awayScore>4</awayScore>
+<stringScore>L, 9-4</stringScore>
+<homeVisitor>T</homeVisitor>
+<homeImageURL>http://grfx.cstv.com/graphics/school-logos/-lg.png</homeImageURL>
+<awayImageURL>http://grfx.cstv.com/graphics/school-logos/ecu-lg.png</awayImageURL>
+<location>"Houston, Texas"</location>
+<date_tba>false</date_tba>
+</MAScore>
+</data>
+    </div>
+    <pre id="outInputXml" class="cm-s-default"></pre>
+</div>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    CodeMirror.runMode($('#inInputXml').html(), "application/xml", document.getElementById("outInputXml"));
+});
+</script>
+</body>
+</html>
+
+
+

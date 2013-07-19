@@ -1,7 +1,7 @@
 /* Custom container */
 .container-narrow {
     margin: 0 auto;
-    max-width: 700px;
+    max-width: 1200px;
 }
 .inputRow {
     padding: 0 0 10px 0;
@@ -10,4 +10,15 @@
     min-height: 25px;
     min-width: 100px;
     padding: 5px;
+}
+.fieldLabel {
+    width: 150px;
+}
+h1 {
+    margin: 15px 0 20px 0;
+}
+.worksheet_xpath {
+    padding: 2px;
+    border: 1px solid #ccc;
+    background: #cecece;
 }
