@@ -56,7 +56,7 @@ $f3->route('POST /mapped',
         $ws = new model\Worksheet();
         $ws->module = $module;
         $ws->record_xpath = $_POST['xpath'];
-        $ws->record_fields = $record_fields;
+        $ws->record_fields = array_values($record_fields);
 
         foreach ($schema['fields'] as $field)
         {
