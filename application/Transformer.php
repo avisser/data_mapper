@@ -71,9 +71,12 @@ class Transformer
         foreach ($Mappings as $Mapping)
         {
             $thisFormula = $Mapping->formula;
-            foreach ($field_keys as $field)
+            if (isset($field_keys))
             {
-                $thisFormula = str_replace($field, $record_data[$field]['safeFieldName'], $thisFormula);
+                foreach ($field_keys as $field)
+                {
+                    $thisFormula = str_replace($field, $record_data[$field]['safeFieldName'], $thisFormula);
+                }
             }
 
             if (class_exists('V8Js') && isset($record_field_map))
