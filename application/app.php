@@ -10,3 +10,5 @@ function my_autoloader($class)
 spl_autoload_register('my_autoloader');
 
 define('ALL_XSLT', APP_PATH . '/all_xpaths.xsl');
+
+require_once APP_PATH . '/config/configuration.php';
