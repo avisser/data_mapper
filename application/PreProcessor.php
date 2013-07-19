@@ -180,7 +180,7 @@ class PreProcessor
     {
         $attribute_xpath = preg_replace("#(.*)@(.*):(.*)#", "$1@$3", $record_xpath);
         if (strlen($attribute_xpath) > 0) {
-            $record_xpath = "/$attribute_xpath";
+            $record_xpath = $attribute_xpath;
             return $record_xpath;
         }
         return $record_xpath;

@@ -57,7 +57,10 @@ XPATH;
         $prefix = '/rss/channel/item';
         $schema = $PreProcessor->getRecordSchema($prefix, $XPATH);
         $expected = array('title', 'link', 'description', 'pubDate', 'dc:date.Taken', 'author', 'guid', 'media:content', 'media:title', 'media:credit', 'media:thumbnail', 'media:category');
-        $this->assertEquivalent($expected, $schema);
+        foreach ($expected as $field)
+        {
+            $this->assertContains($field, $schema);
+        }
     }
 
     function testFoo()
@@ -111,9 +114,9 @@ XSL;
         $proc = new PreProcessor();
         $fields = $proc->getRecordSchema('/rss/channel/item', explode("\n", $xsl_output));
 
-        $expected = array('pubDate', 'dc:date.Taken', 'author', 'author@flickr:profile', 'guid',
-            'guid@isPermaLink', 'media:content', 'media:content@url', 'media:content@type', 'media:content@height', 'media:content@width',
-            'media:title', 'media:thumbnail', 'media:thumbnail@url', 'media:thumbnail@height', 'media:thumbnail@width');
+        $expected = array('pubDate', 'dc:date.Taken', 'author', 'author[@profile]', 'guid',
+            'guid[@isPermaLink]', 'media:content', 'media:content[@url]', 'media:content[@type]', 'media:content[@height]', 'media:content[@width]',
+            'media:title', 'media:thumbnail', 'media:thumbnail[@url]', 'media:thumbnail[@height]', 'media:thumbnail[@width]');
 
         $this->assertEquals( $expected, $fields );
 
