@@ -11,34 +11,40 @@
 <div class="container-narrow">
     <h3>You're asking about {{ @module }}</h3>
 
-    <p>We detected <span class="worksheet_xpath">xpath => {{ @xpath }}</span></p>
+    <div class="col1">
+        <p>We detected your <span class="worksheet_record">record</span> nodes can be found xpath =>  <b>{{ @xpath }}</b></p>
 
-    <h4>We've detected these fields in your data:</h4>
-    <ul>
-        <repeat group="{{ @record_fields }}" value="{{ @field }}">
-            <li>{{ trim(@field) }}</li>
-        </repeat>
-    </ul>
-
-    <form method="POST" action="/mapped" id="mapped">
-        <input type="hidden" name="module" value="{{@module}}"/>
-        <input type="hidden" name="xpath" value="{{@xpath}}"/>
-        <input type="hidden" name="tmp_file" value="{{@tmp_file}}"/>
-        <h4>Please map them to our schema for {{ @module }}</h4>
         <ul>
-            <repeat group="{{ @schema['fields'] }}" value="{{ @field }}">
-                <li>{{ trim(@field['name']) }}
-                    <select name="{{ trim(@field['name']) }}" form="mapped">
-                        <repeat group="{{ @record_fields }}" value="{{ @rfield }}">
-                            <option value="{{ trim(@rfield) }}">{{ trim(@rfield) }}</option>
-                        </repeat>
-                        <option value="Photos">Photos</option>
-                    </select><br/>
-                </li>
+            <repeat group="{{ @record_fields }}" value="{{ @field }}">
+                <li>{{ trim(@field) }}</li>
             </repeat>
         </ul>
-        <input type="submit" value="submit"/>
-    </form>
+    </div>
+
+    <form method="POST" action="/mapped" id="mapped">
+    <div class="col2">
+        <p>We've detected these fields in your <span class="worksheet_record">record</span>:</p>
+
+            <input type="hidden" name="module" value="{{@module}}"/>
+            <input type="hidden" name="xpath" value="{{@xpath}}"/>
+            <input type="hidden" name="tmp_file" value="{{@tmp_file}}"/>
+            <h5>Please map them to our schema for {{ @module }}</h5>
+            <ul>
+                <repeat group="{{ @schema['fields'] }}" value="{{ @field }}">
+                    <li>{{ trim(@field['name']) }}
+                        <select name="{{ trim(@field['name']) }}" form="mapped">
+                            <repeat group="{{ @record_fields }}" value="{{ @rfield }}">
+                                <option value="{{ trim(@rfield) }}">{{ trim(@rfield) }}</option>
+                            </repeat>
+                            <option value="Photos">Photos</option>
+                        </select><br/>
+                    </li>
+                </repeat>
+            </ul>
+            <span style="width:400px; padding-left: 120px"><input type="submit" class="btn" value="submit"/> </span>
+        </form>
+    </div>
+
 </div>
 
     <script src="http://code.jquery.com/jquery.js"></script>

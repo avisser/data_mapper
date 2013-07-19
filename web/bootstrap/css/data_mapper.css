@@ -17,8 +17,22 @@
 h1 {
     margin: 15px 0 20px 0;
 }
-.worksheet_xpath {
+.worksheet_record {
     padding: 2px;
-    border: 1px solid #ccc;
-    background: #cecece;
+    border: 1px solid #dedede;
+    background: #f2f2f2;
+    border-radius: 5px 5px 5px 5px;
+    padding: 0 5px 2px;
+    font-weight: bold;
+}
+.col1, .col2 {
+    float:left;
+    width: 400px;
+}
+.cm-s-default {
+    width: 47%;
+    float:left;
+    white-space: pre;
+    word-break: inherit;
+    overflow: auto;
 }

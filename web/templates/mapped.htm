@@ -5,24 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/bootstrap/css/data_mapper.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="/style/CodeMirror/codemirror.css">
+    <link href="/bootstrap/css/data_mapper.css" rel="stylesheet" media="screen">
     <script src="/style/CodeMirror/codemirror.js"></script>
     <script src="/style/CodeMirror/runmode.js"></script>
     <script src="/style/CodeMirror/xml.js"></script>
 </head>
 <body>
 
-<div class="container-narrow">
-
-    {{ @dump(@ws) }}
-    <br/><br/>
-    {{ @dump(@transformed_data) }}
+<div class="container-narrow" style="max-width: 98%">
 
     <div id="inInputXml" style="display:none">
-        {{ @dump(@transformed_data_xml) }}
+{{ @input_data_xml }}
     </div>
-    <pre id="outInputXml" class="cm-s-default"></pre>
+    <div id="inOutputXml" style="display:none">
+{{ @transformed_data_xml }}
+    </div>
+    <h3>Transformation complete!</h3>
+    <pre id="outInputXml" class="cm-s-default" style="margin-right: 25px;"></pre>
+    <pre id="outOutputXml" class="cm-s-default"></pre>
 </div>
 
 <script src="http://code.jquery.com/jquery.js"></script>
@@ -30,6 +31,7 @@
 <script>
 $(document).ready(function() {
     CodeMirror.runMode($('#inInputXml').html(), "application/xml", document.getElementById("outInputXml"));
+    CodeMirror.runMode($('#inOutputXml').html(), "application/xml", document.getElementById("outOutputXml"));
 });
 </script>
 </body>

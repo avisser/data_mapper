@@ -68,9 +68,11 @@ $f3->route('POST /mapped',
         $xml_file = $_POST['tmp_file'];
         $transformed_data = Transformer::react($xml_file, $ws);
 
+        $f3->set('ESCAPE',FALSE);
         $f3->set('ws', $ws);
         $f3->set('transformed_data', $transformed_data);
-        $f3->set('transformed_data_xml', Serializer::ArrayToXml($transformed_data));
+        $f3->set('transformed_data_xml', Serializer::ArrayToXml($transformed_data, $schema['recordNode']));
+        $f3->set('input_data_xml', file_get_contents($xml_file));
 
         $template = new Template();
         echo $template->render('mapped.htm');
