@@ -74,6 +74,15 @@ $f3->route('POST /mapped',
         $f3->set('transformed_data_xml', Serializer::ArrayToXml($transformed_data, $schema['recordNode']));
         $f3->set('input_data_xml', file_get_contents($xml_file));
 
+        $worksheet_dir = APP_PATH."/../worksheets";
+        if (!stat($worksheet_dir))
+        {
+            mkdir($worksheet_dir);
+        }
+        $worksheet_name = isset($_POST['ws_name']) ? $_POST['ws_name'] : 'no_name';
+
+        file_put_contents("$worksheet_dir/$worksheet_name.json", $ws->serialize());
+
         $template = new Template();
         echo $template->render('mapped.htm');
 
