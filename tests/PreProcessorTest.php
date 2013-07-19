@@ -45,10 +45,7 @@ XPATH;
         $prefix = '/data/bldg';
         $schema = $transform->getRecordSchema($prefix, $XPATH);
         $expected = array('name', 'lat', 'lon');
-        foreach ($expected as $field)
-        {
-            $this->assertContains($field, $schema);
-        }
+        $this->assertEquals($expected, $schema);
     }
 
     function testGetRecordSchemaPhotos()
@@ -59,11 +56,8 @@ XPATH;
         $XPATH = explode("\n", $XPATH);
         $prefix = '/rss/channel/item';
         $schema = $PreProcessor->getRecordSchema($prefix, $XPATH);
-        $expected = array('title', 'link', 'description', 'pubDate', 'dc:date.Taken', 'author', 'guid', 'media:content', 'media:title', 'media:credit', 'media:thumbnail');
-        foreach ($expected as $field)
-        {
-            $this->assertContains($field, $schema);
-        }
+        $expected = array('title', 'link', 'description', 'pubDate', 'dc:date.Taken', 'author', 'guid', 'media:content', 'media:title', 'media:credit', 'media:thumbnail', 'media:category');
+        $this->assertEquivalent($expected, $schema);
     }
 
     function testFoo()
@@ -75,10 +69,7 @@ XPATH;
         $prefix = '/data/bldg';
         $schema = $PreProcessor->getRecordSchema($prefix, $XPATH);
         $expected = array('name' , 'geocode/latitude', 'geocode/longitude');
-        foreach ($expected as $field)
-        {
-            $this->assertContains($field, $schema);
-        }
+        $this->assertEquals($expected, $schema);
     }
 
     function testGetRecords()
@@ -94,5 +85,37 @@ XPATH;
         );
 
         $this->assertEquals($expected, $results);
+    }
+
+    function testAttributes()
+    {
+        $xsl_output = <<<XSL
+/rss/channel/item/pubDate='Thu, 11 Apr 2013 08:08:25 -0700'
+/rss/channel/item/dc:date.Taken='2006-10-10T16:37:23-08:00'
+/rss/channel/item/author='nobody@flickr.com (IESE Business School)'
+/rss/channel/item/author[@flickr:profile='http://www.flickr.com/people/94937385@N08/']
+/rss/channel/item/guid='tag:flickr.com,2004:/photo/8639538757'
+/rss/channel/item/guid[@isPermaLink='false']
+/rss/channel/item/media:content=''
+/rss/channel/item/media:content[@url='http://farm9.staticflickr.com/8126/8639538757_65ff26e410_b.jpg']
+/rss/channel/item/media:content[@type='image/jpeg']
+/rss/channel/item/media:content[@height='681']
+/rss/channel/item/media:content[@width='1024']
+/rss/channel/item/media:title='IESE North Campus - Q Building'
+/rss/channel/item/media:thumbnail=''
+/rss/channel/item/media:thumbnail[@url='http://farm9.staticflickr.com/8126/8639538757_65ff26e410_s.jpg']
+/rss/channel/item/media:thumbnail[@height='75']
+/rss/channel/item/media:thumbnail[@width='75']
+XSL;
+
+        $proc = new PreProcessor();
+        $fields = $proc->getRecordSchema('/rss/channel/item', explode("\n", $xsl_output));
+
+        $expected = array('pubDate', 'dc:date.Taken', 'author', 'author@flickr:profile', 'guid',
+            'guid@isPermaLink', 'media:content', 'media:content@url', 'media:content@type', 'media:content@height', 'media:content@width',
+            'media:title', 'media:thumbnail', 'media:thumbnail@url', 'media:thumbnail@height', 'media:thumbnail@width');
+
+        $this->assertEquals( $expected, $fields );
+
     }
 }

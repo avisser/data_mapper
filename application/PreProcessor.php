@@ -155,14 +155,14 @@ class PreProcessor
 
             $pattern = '#' . $record_xpath . '(\[[0-9]+\])?\/#';
             $path = preg_replace($pattern, '', $path);
-            $pieces = preg_split('/[=\[]/', $path);
-            $tag = $pieces[0];
+            $pieces = explode('=', $path);
+            $tag =  $tag = str_replace("[@", "@", $pieces[0]);// preg_replace( "##", "##", $pieces[0]);
 
             if (!isset($schema[$tag]))
             {
-                $schema[$tag] = $tag;
+                $schema[] = $tag;
             }
         }
-        return $schema;
+        return array_unique($schema);
     }
 }
