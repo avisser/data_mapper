@@ -8,6 +8,7 @@ class Mapping
     public $formula;
     public $type;
     public $ours = true;
+    public $record_fields;
 
     public function __construct($json = null)
     {
