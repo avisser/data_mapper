@@ -6,6 +6,7 @@
     <!-- Bootstrap -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/bootstrap/css/data_mapper.css" rel="stylesheet" media="screen">
+    <link href="/style/jquery.tooltip.css" rel="stylesheet" media="screen">
 </head>
 <body>
 <div class="container-narrow">
@@ -16,7 +17,8 @@
         <p>We've detected these fields in your <span class="worksheet_record">{{ @record_name }}</span>:</p>
         <ul>
             <repeat group="{{ @record_fields }}" value="{{ @field }}">
-                <li>{{ trim(@field) }}</li>
+                <li class="recordField">{{ trim(@field) }}  <span class="tName" style="display:none">{{ trim(@field) }}</span> <span class="fValue" style="display:none">{{ @ifset(@first_record, @field) }}</span>
+                </li>
             </repeat>
         </ul>
     </div>
@@ -34,7 +36,7 @@
                         <select name="{{ trim(@field['name']) }}" form="mapped">
                             <option value="-">-</option>
                             <repeat group="{{ @record_fields }}" value="{{ @rfield }}">
-                                <option value="{{ trim(@rfield) }}">{{ trim(@rfield) }} {{ @ifset(@first_record, @rfield) }}</option>
+                                <option value="{{ trim(@rfield) }}">{{ trim(@rfield) }}</option>
                             </repeat>
                             <option value="custom">Custom...</option>
                         </select><br/>
@@ -53,6 +55,7 @@
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/style/jquery.tooltip.js"></script>
 <script>
 $(document).ready(function() {
     $('select').change(function(event) {
@@ -62,6 +65,19 @@ $(document).ready(function() {
         } else {
             $('#' + field_name + '_custom_entry').hide();
         }
+    });
+
+    $(".recordField").tooltip({
+        bodyHandler: function() {
+            debugger
+            var tagName = $(this).find('.tName').html();
+            var tagValue = $(this).find('.fValue').html();
+            var preview = "&lt;" + tagName + "&gt;<b>" + tagValue + "</b>&lt;/" + tagName + "&gt;";
+            return preview;
+        },
+        showURL: false,
+        top: 10,
+        left: 0
     });
 });
 </script>
