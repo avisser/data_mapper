@@ -12,8 +12,8 @@
     <h3>You're asking about {{ @module }}</h3>
 
     <div class="col1">
-        <p>We detected your <span class="worksheet_record">record</span> nodes can be found xpath =>  <b>{{ @xpath }}</b></p>
-        <p>We've detected these fields in your <span class="worksheet_record">record</span>:</p>
+        <p>We detected your <span class="worksheet_record">{{ @record_name }}</span> nodes can be found xpath =>  <b>{{ @xpath }}</b></p>
+        <p>We've detected these fields in your <span class="worksheet_record">{{ @record_name }}</span>:</p>
         <ul>
             <repeat group="{{ @record_fields }}" value="{{ @field }}">
                 <li>{{ trim(@field) }}</li>
