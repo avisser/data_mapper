@@ -3,3 +3,11 @@
     margin: 0 auto;
     max-width: 700px;
 }
+.inputRow {
+    padding: 0 0 10px 0;
+}
+#fileName {
+    min-height: 25px;
+    min-width: 100px;
+    padding: 5px;
+}
