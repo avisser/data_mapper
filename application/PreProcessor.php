@@ -2,34 +2,78 @@
 
 class PreProcessor
 {
+    /**
+     * @var string
+     */
     private $contents;
+
     /**
      * @var SimpleXmlElement
      */
     private $XmlDocument;
 
-    public static function getRecords($xml_file, $record_xpath)
-    {
-        $Xml = simplexml_load_file($xml_file);
-        $Records = $Xml->xpath($record_xpath);
+    /**
+     * @var array
+     */
+    private $XpathMappings;
 
+    public function getRecords($xml_file, $record_xpath)
+    {
+        $this->setContentsFromFilename($xml_file);
+        $this->XmlDocument = simplexml_load_string($this->contents);    //  todo this can be cached
+
+        $Records = $this->XmlDocument->xpath($record_xpath);
+        $schema = $this->getRecordSchema(null, $record_xpath);
         $out = array();
         foreach ($Records as $Record)
         {
+            $cur = array();
+            foreach ($schema as $mapping)
+            {
+                $simpleXMLElements = $Record->xpath($mapping);
+                $cur[$mapping] = trim(array_pop($simpleXMLElements));
+            }
+            $out[] = $cur;
+        }
+        return $out;
+    }
 
+    /**
+     * @return array
+     */
+    public function getXpathMappings()
+    {
+        if (!$this->XpathMappings)
+        {
+            return $this->getAllXpathMappings();
+        }
+        return $this->XpathMappings;
+    }
+
+    /**
+     * @param $contents
+     */
+    public function setContents($contents)
+    {
+        if ($this->contents != $contents)
+        {
+            $this->contents = $contents;
+            $this->killCache();
         }
     }
 
-    public function setContents($contents)
-    {
-        $this->contents = $contents;
-    }
-
+    /**
+     * @param $filename
+     */
     public function setContentsFromFilename($filename)
     {
-        $this->contents = file_get_contents($filename);
+        $new = file_get_contents($filename);
+        $this->setContents($new);
     }
 
+    /**
+     * @return string
+     */
     public function getXslWorksheet()
     {
         return file_get_contents(ALL_XSLT);
@@ -42,10 +86,10 @@ class PreProcessor
             $this->setContentsFromFilename($filename);
         }
 
-        $all_xpaths = $this->transform($this->contents, $this->getXslWorksheet());
+        $all_xpaths = $this->getAllXpathMappings();
 
         $record_path = NULL;
-        foreach (explode("\n", $all_xpaths) as $p1)
+        foreach ($all_xpaths as $p1)
         {
             if (preg_match("/\[[0-9]+\]/", $p1))
             {
@@ -56,16 +100,13 @@ class PreProcessor
         return $record_path;
     }
 
-    public function transform($xml = null, $xsl = null)
+    public function getAllXpathMappings($xml = null, $xsl = null)
     {
-        if (!$xml)
+        if ($xml)
         {
-            $xml = $this->contents;
+            $this->setContents($xml);
         }
-        else
-        {
-            $this->contents = $xml;
-        }
+
         if (!$xsl)
         {
             $xsl = $this->getXslWorksheet();
@@ -73,43 +114,46 @@ class PreProcessor
 
         $xslt = new XSLTProcessor();
         $xslt->importStylesheet(new SimpleXMLElement($xsl));
-        return $xslt->transformToXml($this->getXmlDoc($xml));
-    }
+        $xpath_str = $xslt->transformToXml($this->getXmlDoc());
+        $this->XpathMappings = explode("\n", $xpath_str);
 
-    public function getAllMappingsFromNode($record_path)
-    {
-        $Records = $this->XmlDocument->xpath($this->getRecordXPath());
+        return $this->XpathMappings;
     }
 
     public function killCache()
     {
         $this->XmlDocument = null;
+        $this->XpathMappings = array();
     }
 
     /**
-     * @param $xml
      * @return SimpleXMLElement
      */
-    public function getXmlDoc($xml)
+    public function getXmlDoc()
     {
         if (!$this->XmlDocument)
         {
-            $this->XmlDocument = new SimpleXMLElement($xml);
+            $this->XmlDocument = new SimpleXMLElement($this->contents);
         }
         return $this->XmlDocument;
     }
 
-    public function getRecordSchema($XPATH = null, $prefix = null)
+    public function getRecordSchema($XPATH = null, $record_xpath = null)
     {
+        if ($XPATH == null)
+        {
+            $XPATH = $this->getAllXpathMappings();
+        }
+
         $schema = array();
         foreach ($XPATH as $path)
         {
-            if (strpos($path, $prefix) === false)
+            if (strpos($path, $record_xpath) === false)
             {
                 continue;
             }
 
-            $pattern = '#' . $prefix . '(\[[0-9]+\])?\/#';
+            $pattern = '#' . $record_xpath . '(\[[0-9]+\])?\/#';
             $path = preg_replace($pattern, '', $path);
             $pieces = preg_split('/[=\[]/', $path);
             $tag = $pieces[0];
