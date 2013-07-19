@@ -25,11 +25,11 @@ $f3->route('POST /map',
         $processor = new PreProcessor();
         $processor->setContentsFromFilename($tmp_file);
         $xpath = $processor->getRecordXPath();
-        $record_schema = $processor->getRecordSchema($xpath);
+        $record_fields = $processor->getRecordSchema($xpath);
         $module = $_POST['module'];
         $schema = model\Schema::load($module);//$f3->get("PARAMS['module']"));
         $f3->set("xpath", $xpath);
-        $f3->set("record_schema", $record_schema);
+        $f3->set("record_fields", $record_fields);
         $f3->set("schema", $schema);
         $f3->set("module", $module);
 

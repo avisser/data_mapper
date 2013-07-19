@@ -1,2 +1,16 @@
 <p>You're asking about {{ @module }}</p>
 <p>We detected xpath => {{ @xpath }}</p>
+
+<h4>We've detected these fields in your data:</h4>
+<ul>
+<repeat group="{{ @record_fields }}" value="{{ @field }}">
+    <li>{{ trim(@field) }}</li>
+</repeat>
+</ul>
+
+<h4>Please map them to our schema for {{ @module }}</h4>
+<ul>
+<repeat group="{{ @schema['fields'] }}" value="{{ @field }}">
+    <li>{{ trim(@field['name']) }}</li>
+</repeat>
+</ul>
