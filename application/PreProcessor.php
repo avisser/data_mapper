@@ -8,16 +8,25 @@ class PreProcessor
      */
     private $XmlDocument;
 
-    public static function getRecords($xml_file, $record_xpath)
+    public function getRecords($xml_file, $record_xpath)
     {
-        $Xml = simplexml_load_file($xml_file);
-        $Records = $Xml->xpath($record_xpath);
+        $this->contents = file_get_contents($xml_file);
+        $this->XmlDocument = simplexml_load_string($this->contents);
 
+        $Records = $this->XmlDocument->xpath($record_xpath);
+        $schema = $this->getRecordSchema(null, $record_xpath);
         $out = array();
         foreach ($Records as $Record)
         {
-
+            $cur = array();
+            foreach ($schema as $mapping)
+            {
+                $simpleXMLElements = $Record->xpath($mapping);
+                $cur[$mapping] = trim(array_pop($simpleXMLElements));
+            }
+            $out[] = $cur;
         }
+        return $out;
     }
 
     public function setContents($contents)
@@ -76,11 +85,6 @@ class PreProcessor
         return $xslt->transformToXml($this->getXmlDoc($xml));
     }
 
-    public function getAllMappingsFromNode($record_path)
-    {
-        $Records = $this->XmlDocument->xpath($this->getRecordXPath());
-    }
-
     public function killCache()
     {
         $this->XmlDocument = null;
@@ -99,17 +103,22 @@ class PreProcessor
         return $this->XmlDocument;
     }
 
-    public function getRecordSchema($XPATH = null, $prefix = null)
+    public function getRecordSchema($XPATH = null, $record_xpath = null)
     {
+        if ($XPATH == null)
+        {
+            $XPATH = explode("\n", $this->transform());
+        }
+
         $schema = array();
         foreach ($XPATH as $path)
         {
-            if (strpos($path, $prefix) === false)
+            if (strpos($path, $record_xpath) === false)
             {
                 continue;
             }
 
-            $pattern = '#' . $prefix . '(\[[0-9]+\])?\/#';
+            $pattern = '#' . $record_xpath . '(\[[0-9]+\])?\/#';
             $path = preg_replace($pattern, '', $path);
             $pieces = preg_split('/[=\[]/', $path);
             $tag = $pieces[0];

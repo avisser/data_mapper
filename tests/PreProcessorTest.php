@@ -81,10 +81,9 @@ XPATH;
         }
     }
 
-    function testExtract()
+    function testGetRecords()
     {
         $PreProcessor = new PreProcessor();
-        $content = file_get_contents($this->sample('buildings1.xml'));
         $results = $PreProcessor->getRecords($this->sample('buildings1.xml'), '/data/bldg');
 
         $expected = array(
