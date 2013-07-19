@@ -31,10 +31,10 @@
                 <repeat group="{{ @schema['fields'] }}" value="{{ @field }}">
                     <li>{{ trim(@field['name']) }}
                         <select name="{{ trim(@field['name']) }}" form="mapped">
+                            <option value="-">-</option>
                             <repeat group="{{ @record_fields }}" value="{{ @rfield }}">
                                 <option value="{{ trim(@rfield) }}">{{ trim(@rfield) }}</option>
                             </repeat>
-                            <option value="-">N/A</option>
                         </select><br/>
                     </li>
                 </repeat>
