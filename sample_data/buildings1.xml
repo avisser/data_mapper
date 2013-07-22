@@ -3,20 +3,36 @@
         <name>Bldg 1</name>
         <lat>37.789413</lat>
         <lon>-122.425827</lon>
+        <street>40 Gold St</street>
+        <city>San Francisco</city>
+        <state>CA</state>
+        <zip>94133</zip>
     </bldg>
     <bldg>
         <name>Bldg 2</name>
         <lat>37.789413</lat>
         <lon>-122.425827</lon>
+        <street>50 Gold St</street>
+        <city>San Francisco</city>
+        <state>CA</state>
+        <zip>94133</zip>
     </bldg>
     <bldg>
         <name>Bldg 3</name>
         <lat>37.789413</lat>
         <lon>-122.425827</lon>
+        <street>60 Gold St</street>
+        <city>San Francisco</city>
+        <state>CA</state>
+        <zip>94133</zip>
     </bldg>
     <bldg>
         <name>Bldg 4</name>
         <lat>37.789413</lat>
         <lon>-122.425827</lon>
+        <street>70 Gold St</street>
+        <city>San Francisco</city>
+        <state>CA</state>
+        <zip>94133</zip>
     </bldg>
 </data>

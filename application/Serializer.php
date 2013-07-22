@@ -14,7 +14,7 @@ class Serializer
         $Writer->setIndent(true);
         $Writer->setIndentString("\t");
         $Writer->startDocument('1.0', 'UTF-8');
-        $Writer->startElement('data');
+        $Writer->startElement('buildings');
 
         self::ArrayToXmlRecursively($Writer, $in);
 

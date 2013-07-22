@@ -1,30 +1,46 @@
 <data>
     <bldg>
-        <name>Bldg 1</name>
+        <name>Casa de Wyman</name>
         <geocode>
             <latitude>37.789413</latitude>
             <longitude>-122.425827</longitude>
         </geocode>
+        <street>1709 Gough St</street>
+        <city>San Francisco</city>
+        <state>CA</state>
+        <zip>94109</zip>
     </bldg>
     <bldg>
         <name>Bldg 2</name>
         <geocode>
-            <latitude>37.789413</latitude>
-            <longitude>-122.425827</longitude>
+            <latitude>37.789415</latitude>
+            <longitude>-122.425825</longitude>
         </geocode>
+        <street>50 Gold St</street>
+        <city>San Francisco</city>
+        <state>CA</state>
+        <zip>94133</zip>
     </bldg>
     <bldg>
         <name>Bldg 3</name>
         <geocode>
-            <latitude>37.789413</latitude>
-            <longitude>-122.425827</longitude>
+            <latitude>37.789414</latitude>
+            <longitude>-122.425826</longitude>
         </geocode>
+        <street>60 Gold St</street>
+        <city>San Francisco</city>
+        <state>CA</state>
+        <zip>94133</zip>
     </bldg>
     <bldg>
         <name>Bldg 4</name>
         <geocode>
-            <latitude>37.789413</latitude>
-            <longitude>-122.425827</longitude>
+            <latitude>37.789411</latitude>
+            <longitude>-122.425821</longitude>
         </geocode>
+        <street>70 Gold St</street>
+        <city>San Francisco</city>
+        <state>CA</state>
+        <zip>94133</zip>
     </bldg>
 </data>

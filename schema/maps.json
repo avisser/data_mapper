@@ -17,6 +17,11 @@
       "type": "longitude",
       "not_null": true
     },
+      {
+          "name": "building_code",
+          "type": "string",
+          "not_null": true
+      },
     {
       "name": "address",
       "type": "string",
